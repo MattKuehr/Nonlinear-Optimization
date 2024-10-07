@@ -82,7 +82,8 @@ def steepest_descent(f, g, x0, tol, k_max):
         #
         # Check for convergence (relative gradient)
         #
-        if gk_norm/g0_norm < tol:
+        # if gk_norm/g0_norm < tol
+        if gk_norm < tol:
             record['converged'] = True
             break
         
@@ -196,7 +197,8 @@ def modified_newton(f,g,h,x0,tol,k_max):
         #
         # Check for convergence (relative gradient)
         #
-        if gk_norm/g0_norm < tol:
+        #if gk_norm/g0_norm < tol
+        if gk_norm < tol:
             record['converged'] = True
             break
         
@@ -345,7 +347,8 @@ def dfp(f,g,x0,H0,tol,k_max):
         #
         # Check for convergence (relative gradient)
         #
-        if gk_norm/g0_norm < tol:
+        # if gk_norm / g0_norm < tol
+        if gk_norm < tol:
             record['converged'] = True
             break
         
@@ -469,7 +472,8 @@ def bfgs(f,g,x0,B0,tol,k_max):
         #
         # Check for convergence (relative gradient)
         #
-        if gk_norm/g0_norm < tol:
+        # if gk_norm/ g0_norm < tol
+        if gk_norm < tol:
             record['converged'] = True
             break
         
@@ -552,6 +556,3 @@ def backtrack(f, xk, pk, a, rho, c1):
         count += 1
         
     return a, count
-
-
-        
