@@ -26,7 +26,7 @@ def test_rosenbrock():
                             [-400*x[0], 200]])
     
     tol = 1e-6
-    k_max = 10000
+    k_max = 15000
     x0 = np.array([-1.2,2])
     
     x_star = np.array([1, 1])  # Ground truth global minimizer
@@ -55,6 +55,7 @@ def test_rosenbrock():
     errors_dfp = np.linalg.norm(record_dfp['xk'] - x_star, axis=1)
     errors_bfgs = np.linalg.norm(record_bfgs['xk'] - x_star, axis=1)
     
+    '''
     # Plot errors vs iterations
     plt.figure(figsize=(10, 6))
     plt.semilogy(record_sd['iteration_count'], errors_sd, label='Steepest Descent')
@@ -68,9 +69,23 @@ def test_rosenbrock():
     plt.legend()
     plt.grid(True)
     plt.show()
+    '''
+    
+    # Plot errors vs iterations
+    plt.figure(figsize=(10, 6))
+    plt.loglog(record_sd['iteration_count'], errors_sd, label='Steepest Descent')
+    plt.loglog(record_newton['iteration_count'], errors_newton, label='Modified Newton')
+    plt.loglog(record_dfp['iteration_count'], errors_dfp, label='DFP')
+    plt.loglog(record_bfgs['iteration_count'], errors_bfgs, label='BFGS')
 
-    #plt.semilogy(record_bfgs['iteration_count'],record_bfgs['gk_norm'])
-    #plt.show()
+    plt.xlabel('Iterations (log scale)')
+    plt.ylabel('Error ||x_k - x*|| (log scale)')
+    plt.title('Convergence of Optimization Methods on Rosenbrock Function (Log-Log Scale)')
+    plt.legend()
+    plt.grid(True, which="both", ls="--")
+    plt.show()
+
+
     
 if __name__ == '__main__':
     test_rosenbrock()
